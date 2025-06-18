@@ -471,8 +471,15 @@ emprestimos = qtd_livro_emprestado["quantidade"].sum()
 # Converter a imagem para base64
 image_path = "icone_download.svg"
 
-with open(image_path, "rb") as image_file:
-    encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
+try:
+    with open(image_path, "rb") as image_file:
+        encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
+except FileNotFoundError:
+    st.error(f"Arquivo {image_path} não encontrado.")
+    encoded_image = ""
+except IOError:
+    st.error(f"Erro ao abrir o arquivo {image_path}.")
+    encoded_image = ""
 
 # totalizador de pessoas cadastradas
 tabela_cadastro = pessoas_cadastradas
@@ -486,8 +493,15 @@ tabela_pessoas_com_livro = pessoas_com_livro[["Nome", "Telefone"]]
 # imagem de download
 image_path2 = "icone_download_preto.svg"
 
-with open(image_path2, "rb") as image_file:
-    encoded_image2 = base64.b64encode(image_file.read()).decode("utf-8")
+try:
+    with open(image_path2, "rb") as image_file:
+        encoded_image2 = base64.b64encode(image_file.read()).decode("utf-8")
+except FileNotFoundError:
+    st.error(f"Arquivo {image_path2} não encontrado.")
+    encoded_image2 = ""
+except IOError:
+    st.error(f"Erro ao abrir o arquivo {image_path2}.")
+    encoded_image2 = ""
 
 col1, col2, col3, col4 = st.columns([0.85, 2.4, 4, 1])
 
