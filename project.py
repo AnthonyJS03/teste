@@ -7,7 +7,11 @@ from wordcloud import WordCloud
 from openpyxl import load_workbook
 from openpyxl.styles import NamedStyle
 from io import BytesIO
-# from sql import *
+from sqlalchemy import create_engine
+from sql import *
+
+# Configuração da conexão com o banco de dados
+engine = create_engine("postgresql://username:password@localhost:5432/database_name")
 
 # configuração do site
 st.set_page_config(page_title="Dashboard", layout="wide")
@@ -15,14 +19,14 @@ st.set_page_config(page_title="Dashboard", layout="wide")
 # with open("styles.css") as css:
 #     st.markdown(f"<style>{css.read()}</style>", unsafe_allow_html=True)
 
-# query_params = st.query_params
+query_params = st.query_params
 
-# id_escola = query_params.get("id_escola", [None])[0]
-# id_escola = int(id_escola)
+id_escola = query_params.get("id_escola", [None])[0]
+id_escola = int(id_escola)
 
-# @st.cache_data
-# def execute_query(query, id_escola):
-#     return pd.read_sql_query(query, con=engine, params=(id_escola,))
+@st.cache_data
+def execute_query(query, id_escola):
+    return pd.read_sql_query(query, con=engine, params=(id_escola,))
 
 def to_base64(file_data):
     return base64.b64encode(file_data).decode("utf-8")
